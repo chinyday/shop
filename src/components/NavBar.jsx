@@ -10,6 +10,7 @@ export default function NavBar() {
 
   useEffect(() => {
     onUserStateChange((user)=>{
+      console.log('user', user);
       setUser(user);
     })
   }, []);
@@ -29,10 +30,11 @@ export default function NavBar() {
       </Link>
       <nav className="flex items-center gap-4 font-semibold">
         <Link to='/products'>products</Link>
-        <Link to='/products/new' className="text-2xl"><BiAddToQueue /></Link>
+        
         <Link to='/cart' className="text-2xl"><BiCartAlt /></Link>
+        {user.isAdmin ? <Link to='/products/new' className="text-2xl"><BiAddToQueue /></Link> : null}
         {user && <User user={user} />}
-        {user ? <button onClick={handleLogout}>Logout</button> : <button onClick={handleLogin}>Login</button>}
+        {user ? <button className="" onClick={handleLogout}>Logout</button> : <button className="" onClick={handleLogin}>Login</button>}
       </nav>
     </header>
   )

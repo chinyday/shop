@@ -2,6 +2,7 @@ import React,{useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { BiAddToQueue, BiCartAlt } from 'react-icons/bi'
 import {login, logout, onUserStateChange} from  '../api/firebase'
+import User from "./User";
 
 export default function NavBar() {
 
@@ -9,10 +10,10 @@ export default function NavBar() {
 
   useEffect(() => {
     onUserStateChange((user)=>{
-      console.log('user', user);
       setUser(user);
     })
   }, []);
+
   const handleLogin = () => {
     login().then(setUser);
   };
@@ -30,6 +31,7 @@ export default function NavBar() {
         <Link to='/products'>products</Link>
         <Link to='/products/new' className="text-2xl"><BiAddToQueue /></Link>
         <Link to='/cart' className="text-2xl"><BiCartAlt /></Link>
+        {user && <User user={user} />}
         {user ? <button onClick={handleLogout}>Logout</button> : <button onClick={handleLogin}>Login</button>}
       </nav>
     </header>

@@ -33,9 +33,9 @@ export default function NewProduct() {
     }
     setProduct((product) => ({ ...product, [name]: value }));
   }
-  
+
   return (
-   <section className="w-full text-center">
+   <section className="w-full text-center mb-10">
     <h2 className="text-2xl font-bold my-4">새로운 제품 등록</h2>
     {success && <p className="my-2">{success}</p>}
     {/* {file && (<img className="w-96 mb-2 mx-auto" src={URL.createObjectURL(file)} alt="local" />)} */}

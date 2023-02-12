@@ -60,3 +60,12 @@ export async function addNewProduct(product, imgUrl) {
   })
 }
 
+export async function getProducts() {
+  return get(ref(db, 'products')).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  });
+}
+

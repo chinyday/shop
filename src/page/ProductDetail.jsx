@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 import { useLocation } from "react-router-dom";
+import { addOrUpdateToCart } from "../api/firebase";
 import Button from '../components/ui/Button'
+import { useAuthContext } from "../context/AuthContext";
 
 export default function ProductDetail() {
   
-  const {state : {product : {image, title, price, description, category, options}}} = useLocation();
+  const {state : {product : {id, image, title, price, description, category, options}}} = useLocation();
   const [selectedOption, setSelectedOption] = useState(options && options[0]);
+  const { uid } = useAuthContext();
   const handleChange = (e) => setSelectedOption(e.target.value);
   const handleclick = (e) => {
-    // 장바구니 추가
+    const product = {id, image, title, price, description, category, selectedOption, quantity:1};
+    addOrUpdateToCart(product, uid);
   }
 
   return (

@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, get, set } from "firebase/database";
+import { getDatabase, ref, get, set, remove } from "firebase/database";
 import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
@@ -49,6 +49,7 @@ async function isAdminUser(user) {
   });
 }
 
+// 제품 등록
 export async function addNewProduct(product, imgUrl) {
   const id = uuid();
   return set(ref(db, `products/${id}`), {
@@ -60,6 +61,7 @@ export async function addNewProduct(product, imgUrl) {
   })
 }
 
+// 상품 가져오기
 export async function getProducts() {
   return get(ref(db, 'products')).then((snapshot) => {
     if (snapshot.exists()) {
@@ -69,3 +71,21 @@ export async function getProducts() {
   });
 }
 
+// 장바구니 가져오기
+export async function getCart(userId) {
+  return get(ref(db, `carts/${userId}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      const items = snapshot.val() || {};
+      return Object.values(items);
+    }
+  });
+}
+
+
+export async function addOrUpdateToCart(product, userId) {
+  return set(ref(db, `carts/${userId}/${product.id}`), product);
+}
+
+export async function removeOrUpdateToCart(productId, userId) {
+  return remove(ref(db, `carts/${userId}/${productId}`));
+}

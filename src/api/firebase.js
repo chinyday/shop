@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, get } from "firebase/database";
+import { getDatabase, ref, get, set } from "firebase/database";
+import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -38,7 +39,6 @@ export function onUserStateChange(callback) {
 }
 
 async function isAdminUser(user) {
-
   return get(ref(db, 'admins')).then((snapshot) => {
     if (snapshot.exists()) {
       const admins = snapshot.val();
@@ -49,5 +49,14 @@ async function isAdminUser(user) {
   });
 }
 
-
+export async function addNewProduct(product, imgUrl) {
+  const id = uuid();
+  set(ref(db, `products/${id}`), {
+    ...product,
+    id,
+    price: parseInt(product.price),
+    image: imgUrl,
+    options: product.options.split(','),
+  })
+}
 

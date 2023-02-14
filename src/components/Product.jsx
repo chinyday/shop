@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { getProducts } from '../api/firebase';
+import useProducts from '../hooks/useProducts';
 import ProductCard from './ProductCard';
 
 const Product = () => {
-  const {isLoading, error, data: products} = useQuery(['products'], getProducts);
-  
+  const {productsQuery:{isLoading, error, data: products}, } = useProducts();
+  //productsQuery 퀴리를 가지고 있는 객체
+
   return (
     <div>
       {isLoading && <p>Loading...</p>}

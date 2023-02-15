@@ -81,11 +81,10 @@ export async function getCart(userId) {
   });
 }
 
-
-export async function addOrUpdateToCart(product, userId) {
+export async function addOrUpdateToCart(userId, product) {
   return set(ref(db, `carts/${userId}/${product.id}`), product);
 }
 
-export async function removeOrUpdateToCart(productId, userId) {
+export async function removeFromCart(userId, productId) {
   return remove(ref(db, `carts/${userId}/${productId}`));
 }

@@ -1,20 +1,20 @@
 import React from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle, AiFillDelete } from 'react-icons/ai'
-import { addOrUpdateToCart, removeOrUpdateToCart } from '../api/firebase';
+import useCart from '../hooks/useCart';
 
-const CartItem = ({product, uid}) => {
-  console.log('product', product);
+const CartItem = ({product}) => {
   const {id, image, price, quantity, title, selectedOption,} = product;
+  const {addOrUpdateItem, removeItem} = useCart();
   
   const handleMinus = () => {
     if(quantity < 2) return;
-    addOrUpdateToCart(uid, {...product, quantity: quantity-1});
+    addOrUpdateItem.mutate({...product, quantity: quantity-1});
   }
   const handlePlus = () => {
-    addOrUpdateToCart(uid, {...product, quantity: quantity+1});
+    addOrUpdateItem.mutate({...product, quantity: quantity+1});
   }
   const handleDelete = () => {
-    removeOrUpdateToCart(uid, id)
+    removeItem.mutate(id);
   }
   
   return (

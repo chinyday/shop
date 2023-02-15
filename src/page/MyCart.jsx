@@ -1,18 +1,15 @@
 import React from "react";
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { FaEquals } from 'react-icons/fa'
-import { getCart } from '../api/firebase';
-import { useQuery } from '@tanstack/react-query';
-import { useAuthContext } from '../context/AuthContext';
 import CartItem from "../components/CartItem";
 import PriceCard from "../components/PriceCard";
 import Button from "../components/ui/Button";
+import useCart from "../hooks/useCart";
 
 const SHOPFEE = 3000;
 
 export default function MyCart() {
-  const { uid } = useAuthContext();
-  const {data: products, isLoading} = useQuery(['cart'], () => getCart(uid));
+  const {cartQuery :{ data: products, isLoading}} = useCart();
 
   if(isLoading) return <p>Loading...</p>;
 
@@ -26,7 +23,7 @@ export default function MyCart() {
         <>
           <ul className="border-b border-gray-300 px-8 mb-8 p-4">
             {products && products.map((product) => 
-              <CartItem key={product.id} product={product} uid={uid}/> 
+              <CartItem key={product.id} product={product} /> 
             )}
           </ul>
         </>

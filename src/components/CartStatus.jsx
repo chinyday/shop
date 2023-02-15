@@ -1,13 +1,11 @@
 import React from 'react';
 import { BiCartAlt } from 'react-icons/bi'
-import { getCart } from '../api/firebase';
-import { useQuery } from '@tanstack/react-query';
-import { useAuthContext } from '../context/AuthContext';
+import useCart from '../hooks/useCart';
 
 
 const CartStatus = () => {
-  const { uid } = useAuthContext();
-  const {data: products} = useQuery(['cart'], () => getCart(uid));
+  const {cartQuery:{ data: products}} = useCart();
+
   return (
     <div className='relative'>
       <BiCartAlt className='text-4xl' />

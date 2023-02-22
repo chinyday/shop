@@ -17,7 +17,7 @@ export default function MyCart() {
   const totlaPrice = products && products.reduce((prev,  curr) => prev + parseInt(curr.price) * curr.quantity, 0);
 
   return (
-    <section className="p-8 flex flex-col">
+    <section className="sm:p-4 md:p-8 lg:p-8 xl:p-8 flex flex-col">
       <h4 className="text-2xl text-center font-bold pb-4 border-b border-gray-300">내 장바구니</h4>
       {!hasProducts ? <p>장바구니가 비어있어요!</p> : 
         <>
@@ -28,7 +28,7 @@ export default function MyCart() {
           </ul>
         </>
       }
-      <div className="flex justify-between items-center px-2 md:px-8 lg:px-16 mb-4">
+      <div className="flex justify-between items-center px-1 sm:px-0 md:px-4 lg:px-16 mb-4">
         <PriceCard text="상품 총액" price={totlaPrice}/>
         <BsFillPlusCircleFill className="shrink-0" />
         <PriceCard text="배송비" price={SHOPFEE}/>
